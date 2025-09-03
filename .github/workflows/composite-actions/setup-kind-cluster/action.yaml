@@ -66,6 +66,7 @@ runs:
         ls -ltr
         echo "found files"
         kubectl apply -f gloo/crds
+        kubectl create ns gloo-system || true
         helm template gloo ./gloo-1.0.1-dev.tgz \
           -f ./values.yaml \
           --namespace gloo-system \
