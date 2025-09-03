@@ -119,20 +119,20 @@ function create_kind_cluster_or_skip() {
 # This config is roughly based on: https://kind.sigs.k8s.io/docs/user/ingress/
 create_kind_cluster_or_skip $SUPPORTED_IP_FAMILY
 
-cat /etc/resolv.conf
+# cat /etc/resolv.conf
 
-kubectl get cm -n kube-system coredns -o yaml
+# kubectl get cm -n kube-system coredns -o yaml
 
-kubectl get po -A
-kubectl get daemonset -A
-kubectl get deploy -A
-sleep 5
-kubectl get replicaset -A --show-labels
-kubectl -n kube-system describe rs -l k8s-app=kube-dns
+# kubectl get po -A
+# kubectl get daemonset -A
+# kubectl get deploy -A
+# sleep 5
+# kubectl get replicaset -A --show-labels
+# kubectl -n kube-system describe rs -l k8s-app=kube-dns
 
-kubectl logs -n kube-system deploy/coredns
+# kubectl logs -n kube-system deploy/coredns
 
-sleep 5
+# sleep 5
 
 # if [[ $SKIP_DOCKER == 'true' ]]; then
 #   # TODO(tim): refactor the Makefile & CI scripts so we're loading local

@@ -66,7 +66,8 @@ runs:
         helm upgrade --install gloo ./gloo-1.0.1-dev.tgz \
           -f ./values.yaml \
           --namespace gloo-system \
-          --create-namespace
+          --create-namespace \
+          --debug
         sleep 3
         kubectl get po -A
     - name: Wait for Gloo deployments
