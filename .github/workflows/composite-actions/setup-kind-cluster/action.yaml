@@ -73,8 +73,7 @@ runs:
           --wait \
           --timeout=1h \
           --debug \
-          --dry-run > gloo-install.yaml
-        kubectl apply -f gloo-install.yaml
+          --dry-run | kubectl apply -f -
         sleep 5
         kubectl get po -A
     - name: Wait for Gloo deployments
