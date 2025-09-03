@@ -57,7 +57,7 @@ runs:
       run: ./ci/kind/setup-kind.sh
     - name: Verify cluster
       shell: bash
-      run: kubectl get nodes
+      run: kubectl get nodes -o wide --show-labels
     - name: coredns logs
       shell: bash
       run: |
