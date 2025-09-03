@@ -58,6 +58,13 @@ runs:
     - name: Verify cluster
       shell: bash
       run: kubectl get nodes
+    - name: coredns logs
+      shell: bash
+      run: |
+        kubectl get po -n kube-system
+        sleep 5
+        echo "dumping coredns logs"
+        kubectl logs deploy/coredns -n kube-system
     - name: test coredns
       shell: bash
       run: ./ci/kind/verify-ipv6-dns.sh
