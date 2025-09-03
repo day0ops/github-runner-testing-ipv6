@@ -76,7 +76,7 @@ runs:
           --debug \
           --dry-run | kubectl apply -f -
         sleep 5
-        kubect get po -A -o wide -w
+        kubectl get po -A -o wide -w
     - name: Wait for Gloo deployments
       shell: bash
       run: |
