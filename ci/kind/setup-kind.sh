@@ -123,7 +123,7 @@ cat /etc/resolv.conf
 
 kubectl get cm -n kube-system coredns -o yaml
 
-kubectl logs -n kube-system deploy/coredns
+kubectl logs -n kube-system daemonset/coredns
 
 # if [[ $SKIP_DOCKER == 'true' ]]; then
 #   # TODO(tim): refactor the Makefile & CI scripts so we're loading local
