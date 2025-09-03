@@ -69,7 +69,8 @@ runs:
           --create-namespace \
           --wait \
           --timeout=1h \
-          --debug
+          --debug \
+          --dry-run
         sleep 3
         kubectl get po -A
     - name: Wait for Gloo deployments
