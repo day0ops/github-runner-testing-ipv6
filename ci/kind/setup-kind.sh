@@ -126,6 +126,10 @@ kubectl get cm -n kube-system coredns -o yaml
 kubectl get po -A
 kubectl get daemonset -A
 kubectl get deploy -A
+sleep 5
+kubectl get replicaset -A --show-labels
+kubectl -n kube-system describe rs -l k8s-app=kube-dns
+
 kubectl logs -n kube-system daemonset/coredns
 
 # if [[ $SKIP_DOCKER == 'true' ]]; then
