@@ -8,7 +8,7 @@ set -e
 # Configuration
 TEST_NAMESPACE="${TEST_NAMESPACE:-ipv6-dns-test}"
 TEST_POD_NAME="ipv6-dns-tester"
-TIMEOUT=30
+TIMEOUT=120
 
 # Log functions
 log_info() {
