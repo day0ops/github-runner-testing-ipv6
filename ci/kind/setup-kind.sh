@@ -123,6 +123,8 @@ cat /etc/resolv.conf
 
 kubectl get cm -n kube-system coredns -o yaml
 
+kubectl logs -n kube-system deploy/coredns
+
 # if [[ $SKIP_DOCKER == 'true' ]]; then
 #   # TODO(tim): refactor the Makefile & CI scripts so we're loading local
 #   # charts to real helm repos, and then we can remove this block.
