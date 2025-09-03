@@ -48,6 +48,8 @@ function create_kind_cluster_or_skip() {
     # see https://github.com/kubernetes-sigs/kind/issues/1736
     # and https://github.com/moby/moby/issues/41651
     new_core_file=$(kubectl get cm -n kube-system coredns -o jsonpath='{.data.Corefile}' | sed -E 's,forward . /etc/resolv.conf( ?\{)?,forward . [64:ff9b::8.8.8.8]:53 [64:ff9b::8.8.4.4]:53\1,' | sed -z 's/\n/\\n/g')
+    echo $new_core_file
+    echo "about to patch coredns"
     kubectl patch configmap/coredns -n kube-system --type merge -p '{"data":{"Corefile": "'"$new_core_file"'"}}'
   elif [[ "$ip_family" = "dual" ]]; then
     echo "creating dual stack based cluster ${CLUSTER_NAME}"
