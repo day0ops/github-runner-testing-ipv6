@@ -61,6 +61,8 @@ runs:
     - name: coredns logs
       shell: bash
       run: |
+        echo  "getting   docker ipv6 gateway"
+        docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPv6Gateway}}{{end}}' cluster-eight-control-plane
         sleep 60
         kubectl -n kube-system wait --for=condition=Ready pod -l k8s-app=cilium --timeout=5m
         kubectl get po -A
