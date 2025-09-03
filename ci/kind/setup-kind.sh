@@ -24,7 +24,7 @@ CONFORMANCE_CHANNEL="${CONFORMANCE_CHANNEL:-"experimental"}"
 # The version of Cilium to install.
 CILIUM_VERSION="${CILIUM_VERSION:-1.15.5}"
 # Set the ip family
-SUPPORTED_IP_FAMILY="${SUPPORTED_IP_FAMILY:-v4}"
+SUPPORTED_IP_FAMILY="${SUPPORTED_IP_FAMILY:-v6}"
 
 function create_kind_cluster_or_skip() {
   ip_family=$1
