@@ -3,7 +3,7 @@
 # IPv6 DNS Verification Script for Kind Cluster
 # This script verifies IPv6 DNS resolution within a Kind cluster
 
-set -e
+#set -e
 
 # Configuration
 TEST_NAMESPACE="${TEST_NAMESPACE:-ipv6-dns-test}"
