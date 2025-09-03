@@ -66,14 +66,14 @@ runs:
         ls -ltr
         echo "found files"
         kubectl apply -f gloo/crds
-        helm upgrade --install gloo ./gloo-1.0.1-dev.tgz \
+        helm template gloo ./gloo-1.0.1-dev.tgz \
           -f ./values.yaml \
           --namespace gloo-system \
           --create-namespace \
           --wait \
           --timeout=1h \
           --debug \
-          --dry-run
+          --dry-run | kubectl apply -f -
         sleep 5
         kubectl get po -A
     - name: Wait for Gloo deployments
