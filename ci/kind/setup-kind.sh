@@ -130,7 +130,7 @@ sleep 5
 kubectl get replicaset -A --show-labels
 kubectl -n kube-system describe rs -l k8s-app=kube-dns
 
-kubectl logs -n kube-system daemonset/coredns
+kubectl logs -n kube-system deploy/coredns
 
 # if [[ $SKIP_DOCKER == 'true' ]]; then
 #   # TODO(tim): refactor the Makefile & CI scripts so we're loading local
