@@ -123,6 +123,9 @@ cat /etc/resolv.conf
 
 kubectl get cm -n kube-system coredns -o yaml
 
+kubectl get po -A
+kubectl get daemonset -A
+kubectl get deploy -A
 kubectl logs -n kube-system daemonset/coredns
 
 # if [[ $SKIP_DOCKER == 'true' ]]; then
