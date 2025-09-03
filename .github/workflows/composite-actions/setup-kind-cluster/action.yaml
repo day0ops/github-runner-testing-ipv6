@@ -73,7 +73,7 @@ runs:
           --wait \
           --timeout=1h \
           --debug \
-          --dry-run | kubectl apply -f -
+          --dry-run
         sleep 5
         kubectl get po -A
     - name: Wait for Gloo deployments
