@@ -64,7 +64,7 @@ runs:
         sleep 60
         kubectl -n kube-system wait --for=condition=Ready pod -l k8s-app=cilium --timeout=5m
         kubectl get po -A
-        kubectl -n kube-system rollout restart deploy/coredns
+        # kubectl -n kube-system rollout restart deploy/coredns
         sleep 5
         kubectl -n kube-system describe pods -l k8s-app=kube-dns
         sleep 10
