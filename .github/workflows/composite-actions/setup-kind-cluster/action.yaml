@@ -58,38 +58,41 @@ runs:
     - name: Verify cluster
       shell: bash
       run: kubectl get nodes
-    - name: Helm install gloo
+    - name: test coredns
       shell: bash
-      run: |
-        tar xzvf ./gloo-1.0.1-dev.tgz
+      run: ./ci/kind/verify-ipv6-dns.sh
+    # - name: Helm install gloo
+    #   shell: bash
+    #   run: |
+    #     tar xzvf ./gloo-1.0.1-dev.tgz
 
-        ls -ltr
-        echo "found files"
-        kubectl apply -f gloo/crds
-        kubectl create ns gloo-system || true
-        helm template gloo ./gloo-1.0.1-dev.tgz \
-          -f ./values.yaml \
-          --namespace gloo-system \
-          --create-namespace \
-          --wait \
-          --timeout=1h \
-          --debug \
-          --dry-run | kubectl apply -f -
-        sleep 5
-        kubectl get po -A -o wide -w
-    - name: Wait for Gloo deployments
-      shell: bash
-      run: |
-        echo "Waiting for Gloo deployments to be ready..."
-        kubectl -n gloo-system get deployments
-        for deploy in $(kubectl -n gloo-system get deployments -o jsonpath='{.items[*].metadata.name}'); do
-          echo "Waiting for deployment $deploy"
-          kubectl -n gloo-system rollout status deployment/$deploy --timeout=5m
-        done
-    - name: test
-      shell: bash
-      run: |
-        sleep 5
-        kubectl get po -A
-        sleep 5
-        ./ci/kind/test-dns.sh kube-system
+    #     ls -ltr
+    #     echo "found files"
+    #     kubectl apply -f gloo/crds
+    #     kubectl create ns gloo-system || true
+    #     helm template gloo ./gloo-1.0.1-dev.tgz \
+    #       -f ./values.yaml \
+    #       --namespace gloo-system \
+    #       --create-namespace \
+    #       --wait \
+    #       --timeout=1h \
+    #       --debug \
+    #       --dry-run | kubectl apply -f -
+    #     sleep 5
+    #     kubectl get po -A -o wide -w
+    # - name: Wait for Gloo deployments
+    #   shell: bash
+    #   run: |
+    #     echo "Waiting for Gloo deployments to be ready..."
+    #     kubectl -n gloo-system get deployments
+    #     for deploy in $(kubectl -n gloo-system get deployments -o jsonpath='{.items[*].metadata.name}'); do
+    #       echo "Waiting for deployment $deploy"
+    #       kubectl -n gloo-system rollout status deployment/$deploy --timeout=5m
+    #     done
+    # - name: test
+    #   shell: bash
+    #   run: |
+    #     sleep 5
+    #     kubectl get po -A
+    #     sleep 5
+    #     ./ci/kind/test-dns.sh kube-system
