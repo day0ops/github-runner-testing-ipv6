@@ -61,8 +61,11 @@ runs:
     - name: Helm install gloo
       shell: bash
       run: |
+        tar xzvf ./gloo-1.0.1-dev.tgz
+
         ls -ltr
         echo "found files"
+        kubectl apply -f gloo/crds
         helm upgrade --install gloo ./gloo-1.0.1-dev.tgz \
           -f ./values.yaml \
           --namespace gloo-system \
