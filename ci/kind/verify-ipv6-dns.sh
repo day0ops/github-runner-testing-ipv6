@@ -41,6 +41,12 @@ deploy_test_pod() {
 
     cat <<EOF | kubectl apply -f -
 apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: $TEST_POD_NAME
+  namespace: $TEST_NAMESPACE
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: $TEST_POD_NAME
@@ -48,6 +54,7 @@ metadata:
   labels:
     app: ipv6-dns-tester
 spec:
+  serviceAccountName: $TEST_POD_NAME
   containers:
   - name: dns-tester
     image: nicolaka/netshoot:latest
