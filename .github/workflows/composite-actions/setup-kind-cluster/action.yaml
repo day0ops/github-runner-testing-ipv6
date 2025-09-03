@@ -67,6 +67,8 @@ runs:
           -f ./values.yaml \
           --namespace gloo-system \
           --create-namespace \
+          --wait \
+          --timeout=1h \
           --debug
         sleep 3
         kubectl get po -A
