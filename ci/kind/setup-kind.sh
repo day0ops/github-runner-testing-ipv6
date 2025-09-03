@@ -124,7 +124,7 @@ function create_kind_cluster_or_skip() {
       --set ipam.mode=kubernetes \
       --set routingMode=native \
       --set autoDirectNodeRoutes=true \
-      --set ipv6NativeRoutingCIDR=fd00:10:244::/48 \
+      --set ipv6NativeRoutingCIDR=fd00:10:1::/56 \
       --set enableIPv6Masquerade=true
   elif [[ "$ip_family" = "dual" ]]; then
     # Check https://github.com/kubernetes-sigs/kind/blob/main/pkg/apis/config/v1alpha4/default.go#L59C57-L59C60 for the default subnets

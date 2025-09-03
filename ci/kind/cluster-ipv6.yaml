@@ -18,7 +18,6 @@ kubeadmConfigPatches:
     kind: InitConfiguration
     metadata:
       name: config
-
-# nodes:
-#   - role: control-plane
-#   - role: worker
+nodes:
+  - role: control-plane
+  - role: worker
