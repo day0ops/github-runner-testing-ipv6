@@ -55,6 +55,26 @@ runs:
         CONFORMANCE_VERSION: ${{ inputs.k8sgateway-api-version }}
         setu: ${{ inputs.supported-ip-family }}
       run: ./ci/kind/setup-kind.sh
+    - name: Verify cluster
+      shell: bash
+      run: kubectl get nodes
+    - name: Helm install gloo
+      shell: bash
+      run: |
+        helm upgrade --install gloo ./gloo-1.0.1-dev.tgz \
+          -f values.yaml \
+          --namespace gloo-system \
+          --create-namespace
+    - name: Wait for Gloo deployments
+      shell: bash
+      run: |
+        echo "Waiting for Gloo deployments to be ready..."
+        kubectl -n gloo-system get deployments
+        for deploy in $(kubectl -n gloo-system get deployments -o jsonpath='{.items[*].metadata.name}'); do
+          echo "Waiting for deployment $deploy"
+          kubectl -n gloo-system rollout status deployment/$deploy --timeout=5m
+        done
     - name: test
       shell: bash
-      run: ./ci/kind/test-dns.sh kube-system
+      run: |
+        ./ci/kind/test-dns.sh kube-system
