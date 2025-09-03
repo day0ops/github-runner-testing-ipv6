@@ -60,7 +60,7 @@ runs:
       run: kubectl get nodes
     - name: Helm install gloo
       shell: bash
-      run: |\
+      run: |
         ls -ltr
         echo "found files"
         helm upgrade --install gloo ./gloo-1.0.1-dev.tgz \
