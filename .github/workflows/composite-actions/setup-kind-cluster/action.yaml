@@ -61,6 +61,8 @@ runs:
     - name: coredns logs
       shell: bash
       run: |
+        sleep 60
+        kubectl -n kube-system wait --for=condition=Ready pod -l k8s-app=cilium --timeout=5m
         kubectl get po -A
         kubectl -n kube-system rollout restart deploy/coredns
         sleep 5
