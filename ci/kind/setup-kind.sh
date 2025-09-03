@@ -56,7 +56,7 @@ function create_kind_cluster_or_skip() {
         -e 's/^.*kubernetes cluster\.local/& internal/' \
         -e '/^.*upstream$/d' \
         -e '/^.*fallthrough.*$/d' \
-        -e '/^.*forward . \/etc\/resolv.conf$/d' \
+        -e '/forward \. \/etc\/resolv\.conf {/,/}/d' \
         -e '/^.*loop$/d'
     )
     echo "about to patch coredns"
