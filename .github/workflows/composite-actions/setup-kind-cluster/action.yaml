@@ -73,8 +73,9 @@ runs:
           --wait \
           --timeout=1h \
           --debug \
-          --dry-run
-        sleep 3
+          --dry-run > gloo-install.yaml
+        kubectl apply -f gloo-install.yaml
+        sleep 5
         kubectl get po -A
     - name: Wait for Gloo deployments
       shell: bash
@@ -88,4 +89,7 @@ runs:
     - name: test
       shell: bash
       run: |
+        sleep 5
+        kubectl get po -A
+        sleep 5
         ./ci/kind/test-dns.sh kube-system
