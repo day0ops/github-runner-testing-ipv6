@@ -76,9 +76,7 @@ runs:
           --debug \
           --dry-run | kubectl apply -f -
         sleep 5
-        kubectl describe deploy/gloo -n gloo-system
-        sleep 5
-        kubectl describe deploy/gateway-proxy -n gloo-system
+        kubect get po -A -o wide -w
     - name: Wait for Gloo deployments
       shell: bash
       run: |
