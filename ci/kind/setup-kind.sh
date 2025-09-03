@@ -134,8 +134,6 @@ kubectl logs -n kube-system deploy/coredns
 
 sleep 5
 
-./test-dns.sh kube-system
-
 # if [[ $SKIP_DOCKER == 'true' ]]; then
 #   # TODO(tim): refactor the Makefile & CI scripts so we're loading local
 #   # charts to real helm repos, and then we can remove this block.

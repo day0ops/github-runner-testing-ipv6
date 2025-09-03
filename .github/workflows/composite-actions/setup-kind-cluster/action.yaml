@@ -55,3 +55,6 @@ runs:
         CONFORMANCE_VERSION: ${{ inputs.k8sgateway-api-version }}
         setu: ${{ inputs.supported-ip-family }}
       run: ./ci/kind/setup-kind.sh
+    - name: test
+      shell: bash
+      run: ./ci/kind/test-dns.sh kube-system
