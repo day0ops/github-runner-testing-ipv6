@@ -80,15 +80,6 @@ runs:
       shell: bash
       run: ./ci/kind/verify-ipv6-dns.sh
 
-    - name: dump the coredns
-      shell: bash
-      run: |
-        echo "dumping coredns logs"
-        for pod in $(kubectl get pods -n kube-system -l k8s-app=kube-dns -o name); do
-          echo "=== Logs from $pod ==="
-          kubectl logs -n kube-system "$pod"
-          echo
-        done
     # - name: Helm install gloo
     #   shell: bash
     #   run: |

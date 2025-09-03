@@ -282,6 +282,13 @@ main() {
     test_kubernetes_dns
     test_external_dns
 
+    echo "dumping coredns logs"
+    for pod in $(kubectl get pods -n kube-system -l k8s-app=kube-dns -o name); do
+        echo "=== Logs from $pod ==="
+        kubectl logs -n kube-system "$pod"
+        echo
+    done
+
     echo ""
     generate_report
 
@@ -289,7 +296,7 @@ main() {
 }
 
 # Handle script interruption
-trap 'log_error "Script interrupted"; cleanup; exit 1' INT TERM
+#trap 'log_error "Script interrupted"; cleanup; exit 1' INT TERM
 
 # Run main function if script is executed directly
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
