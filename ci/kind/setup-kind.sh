@@ -47,10 +47,21 @@ function create_kind_cluster_or_skip() {
     # this is a hack to bypass lack of a docker ipv6 dns resolver.
     # see https://github.com/kubernetes-sigs/kind/issues/1736
     # and https://github.com/moby/moby/issues/41651
-    new_core_file=$(kubectl get cm -n kube-system coredns -o jsonpath='{.data.Corefile}' | sed -E 's,forward . /etc/resolv.conf( ?\{)?,forward . [64:ff9b::8.8.8.8]:53 [64:ff9b::8.8.4.4]:53\1,' | sed -z 's/\n/\\n/g')
-    echo $new_core_file
+    #original_coredns=$(kubectl get cm -n kube-system coredns -o jsonpath='{.data.Corefile}')
+    # | sed -E 's,forward . /etc/resolv.conf( ?\{)?,forward . [64:ff9b::8.8.8.8]:53 [64:ff9b::8.8.4.4]:53\1,' | sed -z 's/\n/\\n/g')
+    original_coredns=$(kubectl get -oyaml -n=kube-system configmap/coredns)
+    echo $original_coredns
+    fixed_coredns=$(
+      printf '%s' "${original_coredns}" | sed \
+        -e 's/^.*kubernetes cluster\.local/& internal/' \
+        -e '/^.*upstream$/d' \
+        -e '/^.*fallthrough.*$/d' \
+        -e '/^.*forward . \/etc\/resolv.conf$/d' \
+        -e '/^.*loop$/d'
+    )
     echo "about to patch coredns"
-    kubectl patch configmap/coredns -n kube-system --type merge -p '{"data":{"Corefile": "'"$new_core_file"'"}}'
+    printf '%s' "${fixed_coredns}" | kubectl apply -f -
+    #kubectl patch configmap/coredns -n kube-system --type merge -p '{"data":{"Corefile": "'"$fixed_coredns"'"}}'
   elif [[ "$ip_family" = "dual" ]]; then
     echo "creating dual stack based cluster ${CLUSTER_NAME}"
     kind create cluster \
@@ -107,6 +118,11 @@ function create_kind_cluster_or_skip() {
   fi
   helm repo remove cilium-setup-kind
   echo "Finished setting up cluster $CLUSTER_NAME"
+
+  # make sure cilium is ready before moving on
+  kubectl -n kube-system \
+    wait --for=condition=Ready \
+    pod -l k8s-app=cilium --timeout=5m
 
   # so that you can just build the kind image alone if needed
   if [[ $JUST_KIND == 'true' ]]; then
