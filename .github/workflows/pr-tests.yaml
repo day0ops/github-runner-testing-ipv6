@@ -65,4 +65,4 @@ jobs:
           kubectl-version: ${{ steps.dotenv.outputs.kubectl_version }}
           helm-version: ${{ steps.dotenv.outputs.helm_version }}
           istio-version: ${{ steps.dotenv.outputs.istio_version }}
-          supported-ip-family: ${{ matrix.test.supported-ip-family || 'v4' }}
+          supported-ip-family: ${{ matrix.test.supported-ip-family}}
