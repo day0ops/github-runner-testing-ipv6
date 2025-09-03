@@ -63,7 +63,7 @@ runs:
       run: |
         kubectl get po -A
         sleep 5
-        kubectl -n kube-system describe rs -l k8s-app=kube-dns
+        kubectl -n kube-system describe pods -l k8s-app=kube-dns
         sleep 10
         echo "dumping coredns logs"
         kubectl logs deploy/coredns -n kube-system
