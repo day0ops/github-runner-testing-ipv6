@@ -65,10 +65,13 @@ runs:
         docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPv6Gateway}}{{end}}' cluster-eight-control-plane
         sleep 60
         kubectl -n kube-system wait --for=condition=Ready pod -l k8s-app=cilium --timeout=5m
-        kubectl get po -A
+        echo "list of pods"
+        kubectl get po -A -o wide
+        echo "list of services"
+        kubectl get svc -A -o wide
         # kubectl -n kube-system rollout restart deploy/coredns
         sleep 5
-        kubectl -n kube-system describe pods -l k8s-app=kube-dns
+        #kubectl -n kube-system describe pods -l k8s-app=kube-dns
         sleep 10
         echo "dumping coredns logs"
         kubectl logs deploy/coredns -n kube-system
