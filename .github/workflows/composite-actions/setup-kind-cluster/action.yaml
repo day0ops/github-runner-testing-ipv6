@@ -61,10 +61,13 @@ runs:
     - name: coredns logs
       shell: bash
       run: |
-        kubectl get po -n kube-system
+        kubectl get po -A
         sleep 5
+        kubectl -n kube-system describe rs -l k8s-app=kube-dns
+        sleep 10
         echo "dumping coredns logs"
         kubectl logs deploy/coredns -n kube-system
+
     - name: test coredns
       shell: bash
       run: ./ci/kind/verify-ipv6-dns.sh
