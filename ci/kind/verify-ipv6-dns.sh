@@ -84,6 +84,21 @@ test_dns_resolution() {
     log_info "Testing DNS resolution: $description"
     echo "Target: $target, Record Type: $record_type"
 
+    # Test with dig if available
+    local dig_result
+    if kubectl exec -n $TEST_NAMESPACE $TEST_POD_NAME -- which dig &>/dev/null; then
+        if dig_result=$(kubectl exec -n $TEST_NAMESPACE $TEST_POD_NAME -- dig +short "$target" $record_type 2>&1); then
+            if [[ -n "$dig_result" ]]; then
+                log_success "dig for $target successful"
+                echo "Dig result: $dig_result"
+            else
+                log_warning "dig returned empty result for $target"
+            fi
+        else
+            log_warning "dig command failed for $target"
+        fi
+    fi
+
     # Test with nslookup
     local nslookup_result
     if nslookup_result=$(kubectl exec -n $TEST_NAMESPACE $TEST_POD_NAME -- nslookup -type=$record_type "$target" 2>&1); then
@@ -102,21 +117,6 @@ test_dns_resolution() {
         log_error "nslookup command failed for $target"
         echo "$nslookup_result"
         return 1
-    fi
-
-    # Test with dig if available
-    local dig_result
-    if kubectl exec -n $TEST_NAMESPACE $TEST_POD_NAME -- which dig &>/dev/null; then
-        if dig_result=$(kubectl exec -n $TEST_NAMESPACE $TEST_POD_NAME -- dig +short "$target" $record_type 2>&1); then
-            if [[ -n "$dig_result" ]]; then
-                log_success "dig for $target successful"
-                echo "Dig result: $dig_result"
-            else
-                log_warning "dig returned empty result for $target"
-            fi
-        else
-            log_warning "dig command failed for $target"
-        fi
     fi
 
     echo "---"
