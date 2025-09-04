@@ -128,10 +128,10 @@ test_kubernetes_dns() {
     log_info "Testing Kubernetes internal DNS resolution..."
 
     # Test cluster DNS
-    test_dns_resolution "kubernetes.default.svc.cluster.local" "Kubernetes API service"
+    test_dns_resolution "kubernetes.default.svc.cluster.local." "Kubernetes API service"
 
     # Test kube-dns/coredns service
-    test_dns_resolution "kube-dns.kube-system.svc.cluster.local" "CoreDNS service"
+    test_dns_resolution "kube-dns.kube-system.svc.cluster.local." "CoreDNS service"
 
     # Create a test service for DNS testing
     log_info "Creating test service for DNS verification..."
