@@ -154,7 +154,7 @@ EOF
     sleep 5
 
     # Test the created service
-    test_dns_resolution "test-service.$TEST_NAMESPACE.svc.cluster.local" "Test service DNS"
+    test_dns_resolution "test-service.$TEST_NAMESPACE.svc.cluster.local." "Test service DNS"
     test_dns_resolution "test-service" "Test service short name (from same namespace)"
 }
 
