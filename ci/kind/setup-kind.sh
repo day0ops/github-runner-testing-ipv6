@@ -89,7 +89,8 @@ function create_kind_cluster_or_skip() {
         -e '/^.*upstream$/d' \
         -e '/^.*fallthrough.*$/d' \
         -e '/forward \. \/etc\/resolv\.conf {/,/}/d' \
-        -e '/^.*loop$/d'
+        -e '/^.*loop$/d' \
+        -e '/^\s*errors$/a\    log'
     )
     echo "about to patch coredns"
     printf '%s' "${fixed_coredns}" | kubectl apply -f -
