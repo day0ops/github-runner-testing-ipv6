@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package ping;
+
+option go_package = "github.com/day0ops/simple-ping-pong-grpc";
+
+service TestService {
+    rpc Ping(PingRequest) returns (PingResponse);
+    rpc GetHostInfo(HostRequest) returns (HostResponse);
+}
+
+message PingRequest {
+    string message = 1;
+}
+
+message PingResponse {
+    string message = 1;
+    string server_hostname = 2;
+    string server_ip = 3;
+    int64 timestamp = 4;
+}
+
+message HostRequest {
+}
+
+message HostResponse {
+    string hostname = 1;
+    string ip_address = 2;
+    repeated string dns_servers = 3;
+}

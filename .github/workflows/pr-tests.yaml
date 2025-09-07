@@ -60,3 +60,12 @@ jobs:
           helm-version: ${{ steps.dotenv.outputs.helm_version }}
           istio-version: ${{ steps.dotenv.outputs.istio_version }}
           supported-ip-family: ${{ matrix.test.supported-ip-family}}
+
+      - id: go-build
+        name: Go Build
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Building Gloo Edge..."
+          make build-images load-images deploy test
+          echo "Build complete."

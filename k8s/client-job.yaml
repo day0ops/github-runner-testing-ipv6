@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: grpc-client-test
+  namespace: test
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: grpc-client
+          image: grpc-client:latest
+          imagePullPolicy: Never  # Use local image
+          env:
+            - name: SERVER_ADDR
+              value: "grpc-server.coredns-test.svc.cluster.local:50051"
+          command: ["./client"]
+  backoffLimit: 3
