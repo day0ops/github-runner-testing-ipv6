@@ -66,6 +66,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          echo "Building Gloo Edge..."
+          echo "Building..."
           make build-images load-images deploy test
           echo "Build complete."
