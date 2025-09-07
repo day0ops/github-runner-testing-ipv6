@@ -40,7 +40,7 @@ install-protoc:
 	fi
 
 # Build protocol buffers
-build-proto:
+build-proto: install-protoc install-go-tools
 	@echo "Building protocol buffers..."
 	${DEPSGOBIN}/protoc --go_out=server --go_opt=paths=source_relative \
 		--go-grpc_out=server --go-grpc_opt=paths=source_relative \
