@@ -58,8 +58,8 @@ build-images: build-proto
 
 load-images:
 	@echo "Loading images into kind cluster..."
-	kind load docker-image grpc-server:latest
-	kind load docker-image grpc-client:latest
+	kind load docker-image -n cluster-eight grpc-server:latest
+	kind load docker-image -n cluster-eight grpc-client:latest
 
 # Deploy to Kubernetes
 deploy:
