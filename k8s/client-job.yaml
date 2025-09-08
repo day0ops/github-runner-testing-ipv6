@@ -15,6 +15,6 @@ spec:
           imagePullPolicy: Never # Use local image
           env:
             - name: SERVER_ADDR
-              value: "grpc-server.coredns-test.svc.cluster.local:50051"
+              value: "grpc-server.test.svc.cluster.local:50051"
           command: ["./client"]
   backoffLimit: 3
