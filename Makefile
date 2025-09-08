@@ -77,7 +77,8 @@ test:
 	kubectl apply -f k8s/client-job.yaml
 	sleep 5
 	kubectl get  po -n test --show-labels
-	kubectl logs -p -n test -l app=grpc-client-test
+	kubectl logs -f -n test -l job-name=grpc-client-test
+	kubectl logs -p -n test -l job-name=grpc-client-test
 	@echo "Waiting for test to complete..."
 	kubectl wait --for=condition=complete --timeout=60s job/grpc-client-test -n test
 	@echo "Test results:"
