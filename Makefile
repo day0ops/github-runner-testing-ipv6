@@ -75,6 +75,9 @@ test:
 	@echo "Running DNS resolution test..."
 	kubectl delete job grpc-client-test -n test --ignore-not-found=true
 	kubectl apply -f k8s/client-job.yaml
+	sleep 5
+	kubectl get  po -n test
+	kubectl logs -n test -l app=grpc-client-test
 	@echo "Waiting for test to complete..."
 	kubectl wait --for=condition=complete --timeout=60s job/grpc-client-test -n test
 	@echo "Test results:"
